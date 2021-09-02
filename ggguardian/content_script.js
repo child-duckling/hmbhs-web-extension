@@ -24,7 +24,7 @@ document.documentElement.innerHTML = `<!DOCTYPE html><head></head><body><iframe 
 })
 
 setTimeout(() => {
-
+    window.open(blockedURL)
     document.body.parentNode.removeChild(document.body);
     document.documentElement.innerHTML = `<!DOCTYPE html><head></head><body><iframe src="${blockedURL}" width="100%" height="1000px"></iframe></body>`
 
