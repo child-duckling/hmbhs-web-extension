@@ -1,0 +1,31 @@
+{
+	"manifest_version": 2,
+	"name": "GGguardian",
+	"description": "Nothing",
+	"version": "0.0.1",
+	"icons": {
+		"64": "icons/icon.png"
+	},
+	"background": {
+		"scripts": [
+			"background_script.js"
+		]
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"*://student.goguardian.com/teacher/blocked.html*"
+			],
+			"js": [
+				"content_script.js"
+			]
+		}
+	],
+	"options_ui": {
+		"page": "options/index.html"
+	},
+    "permissions": [
+    "*://student.goguardian.com/teacher/blocked.html*",
+    "notifications"
+    ]
+}
