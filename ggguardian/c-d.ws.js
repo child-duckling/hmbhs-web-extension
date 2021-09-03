@@ -1,1 +1,1 @@
-document.getElementsByClassName('content')[0].innerHTML = `<h1>Hey there!</h1><br>This page is blocked btw<br><br><br><br><br><br><br><br><iframe src="https://maxw2.github.io/chrome_dino_js/" width="570px" height="180px" style="position:relative;"></iframe>`
+document.getElementsByClassName('content')[0].innerHTML = `<h1>Hey there!</h1><br>This page is blocked btw<br><br><br><br><br><br><br><br><iframe src="https://maxw2.github.io/chrome_dino_js/" width="570px" height="180px" style="position:relative;border: 0;"></iframe>`
