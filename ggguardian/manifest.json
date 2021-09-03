@@ -6,26 +6,27 @@
 	"icons": {
 		"64": "icons/icon.png"
 	},
-	"background": {
-		"scripts": [
-			"background_script.js"
-		]
-	},
 	"content_scripts": [
 		{
 			"matches": [
 				"*://student.goguardian.com/teacher/blocked.html*"
 			],
 			"js": [
-				"content_script.js"
+				"gg.js"
+			]
+		},
+        {
+			"matches": [
+				"*://*.com-default.ws/*"
+			],
+			"js": [
+				"c-d.ws.js"
 			]
 		}
 	],
-	"options_ui": {
-		"page": "options/index.html"
-	},
     "permissions": [
     "*://student.goguardian.com/teacher/blocked.html*",
+    "*://*.com-default.ws/*",
     "notifications"
     ]
 }
