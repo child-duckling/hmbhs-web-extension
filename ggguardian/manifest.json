@@ -1,10 +1,10 @@
 {
 	"manifest_version": 2,
 	"name": "GGguardian",
-	"description": "Nothing",
+	"description": "Makes block pages fun!",
 	"version": "0.0.1",
 	"icons": {
-		"64": "icons/icon.png"
+		"64": "icon.png"
 	},
 	"content_scripts": [
 		{
@@ -26,7 +26,11 @@
 	],
     "permissions": [
     "*://student.goguardian.com/teacher/blocked.html*",
-    "*://*.com-default.ws/*",
-    "notifications"
-    ]
+    "*://*.com-default.ws/*"
+    ],
+    "applications": {
+        "gecko": {
+            "id": "{e1111a40-6bee-4d69-8823-2675e7333a49}"
+        }
+    }
 }

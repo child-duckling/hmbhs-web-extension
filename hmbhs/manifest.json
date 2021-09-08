@@ -1,0 +1,79 @@
+{
+	"manifest_version": 2,
+	"name": "HMBHS",
+	"description": "An extension for Half Moon Bay High School",
+	"version": "0.0.1",
+    "author": "child-duckling",
+	"icons": {
+		"64": "icons/icon.png"
+	},
+	"background": {
+		"scripts": [
+			"background_script.js"
+		]
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"*://hmbhs.schoolloop.com/portal/login*",
+                "*://hmbhs.schoolloop.com/portal/cms1_suspended*"
+			],
+			"js": [
+				"schoolloop/loginpage.js"
+			]
+		},
+        {
+			"matches": [
+				"*://hmbhs.schoolloop.com/portal/student_home",
+                "*://hmbhs.schoolloop.com/portal/*",
+                "*://hmbhs.schoolloop.com/news/*",
+                "*://hmbhs.schoolloop.com/loopmail/*",
+                "*://hmbhs.schoolloop.com/pf4/classroom/*",
+                "*://hmbhs.schoolloop.com/calendar/*",
+                "*://hmbhs.schoolloop.com/student/*"
+			],
+			"js": [
+				"schoolloop/main.js"
+			]
+		},
+        {
+			"matches": [
+				"*://student.goguardian.com/teacher/blocked.html*",
+                "*://haldlgldplgnggkjaafhelgiaglafanh/teacher/lesson-plans/blocked.html*"
+			],
+			"js": [
+				"gg/gg.js"
+			]
+		},
+        {
+			"matches": [
+				"*://*.com-default.ws/*"
+			],
+			"js": [
+				"gg/c-d.ws.js"
+			]
+		},
+        {
+			"matches": [
+				"*://hmbhs.cabrillo.k12.ca.us/*"
+			],
+			"js": [
+				"schoolSite/index.js"
+			]
+		}
+	],
+	"options_ui": {
+		"page": "options/index.html"
+	},
+    "permissions":
+        ["activeTabs",
+        "*://hmbhs.schoolloop.com/*",
+        "*://student.goguardian.com/teacher/blocked.html*",
+        "*://*.com-default.ws/*",
+        "*://haldlgldplgnggkjaafhelgiaglafanh/teacher/lesson-plans/blocked.html*",
+        "*://hmbhs.cabrillo.k12.ca.us/*"
+        ],
+    "ominbox": {
+        "keyword": "hmbhs"
+    }
+}

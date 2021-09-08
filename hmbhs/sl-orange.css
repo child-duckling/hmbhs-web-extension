@@ -1,0 +1,40 @@
+body {
+    background: #f2f0e9;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: #444444;
+    margin: 0px;
+    padding: 0px;
+}
+.container_header_links {
+    background: rgb(255, 116, 23) none repeat scroll 0% 0%;
+}
+.header_icons {
+    background: url(https://cdn.schoolloop.com/release_1.0.39.1/img/icon_background.png) repeat;
+    float: right;
+    padding: 0px;
+    margin: 0px;
+    margin-top: 0px;
+    margin-top: 10px;
+    -moz-box-shadow: 0px 0px 2px #999;
+    -webkit-box-shadow: 0px 0px 2px #999;
+    box-shadow: 0px 0px 2px #999;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+a.link_block_sm {
+    border-right: 1px solid rgb(255, 116, 23);
+}
+a.icon_help2 {
+    border-right: 1px solid rgb(255, 116, 23);
+}
+a.icon_settings2 {
+    border-left: 1px solid rgb(255, 116, 23);
+}
+.header_tabs {
+    border-bottom: 1px #f90 solid;
+}
+.dashboard {
+    background: rgb(248, 243, 237) none repeat scroll 0% 0%;
+}
