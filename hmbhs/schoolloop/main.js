@@ -37,6 +37,10 @@ let classroomStyle = `
     margin: 0px;
     text-align: center;
 `
+
+
+
+
 let hover = `
 background-color: #ff9900;
 text-decoration: none;
@@ -45,8 +49,13 @@ text-decoration: none;
 border-radius: 3px;`
 
 let header = document.querySelector('.header_icons')
+document.querySelector('.header_icons').remove()
 header.style = 'filter:hue-rotate(180deg);'
-header.innerHTML += `<a href="https://classroom.google.com/" data-track-link="calendar" class="icon_classroom" style="${classroomStyle} onhover=${hover}">Classroom</a>`
+header.innerHTML += `<a href="https://classroom.google.com/" target="_blank" rel="noopener noreferrer" data-track-link="calendar" class="icon_classroom" style="${classroomStyle} onhover=${hover}">Classroom</a>`
+document.querySelector('.module').prepend(header)
+let appText = document.createElement('h2')
+appText.textContent = 'Links'
+document.querySelector('.module').prepend(appText)
 
 
 let credit = document.createElement('a')
