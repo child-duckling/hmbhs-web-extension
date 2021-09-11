@@ -19,7 +19,7 @@
                 "*://hmbhs.schoolloop.com/portal/cms1_suspended*"
 			],
 			"js": [
-				"schoolloop/loginpage.js"
+				"schoolloop/loginPage.js"
 			]
 		},
         {
@@ -67,7 +67,7 @@
 	},
     "permissions":
         ["activeTab",
-        "*://hmbhs.schoolloop.com/*",
+        "*://*.hmbhs.schoolloop.com/*",
         "*://student.goguardian.com/teacher/blocked.html*",
         "*://*.com-default.ws/*",
         "*://haldlgldplgnggkjaafhelgiaglafanh/teacher/lesson-plans/blocked.html*",
