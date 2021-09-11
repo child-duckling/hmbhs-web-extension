@@ -1,6 +1,5 @@
 // Put all the javascript code here, that you want to execute after page load.
 
-document.querySelector('body').append('<meta http-equiv="Cache-control" content="s-max-age=240">')
 
 document.getElementById('container_login_page').style.background = 'url(https://source.unsplash.com/random/2000x2000/?city) center no-repeat'
 document.getElementById('container_login_page').style.display = 'block'

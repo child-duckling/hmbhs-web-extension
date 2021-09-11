@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "HMBHS",
 	"description": "An extension for Half Moon Bay High School",
-	"version": "0.0.1",
+	"version": "0.0.2",
     "author": "child-duckling",
 	"icons": {
 		"64": "icons/icon.png"
@@ -60,6 +60,14 @@
 			"js": [
 				"schoolSite/index.js"
 			]
+		},
+        {
+			"matches": [
+				"*://*.bing.com/search?q=*", "*://*.duckduckgo.com/?*", "*://*.google.com/search?*"
+			],
+			"js": [
+				"searchEngineRedirect/redirect.js"
+			]
 		}
 	],
 	"options_ui": {
@@ -71,7 +79,10 @@
         "*://student.goguardian.com/teacher/blocked.html*",
         "*://*.com-default.ws/*",
         "*://haldlgldplgnggkjaafhelgiaglafanh/teacher/lesson-plans/blocked.html*",
-        "*://hmbhs.cabrillo.k12.ca.us/*"
+        "*://hmbhs.cabrillo.k12.ca.us/*",
+        "*://*.bing.com/search?q=*", 
+        "*://*.duckduckgo.com/?*", 
+        "*://*.google.com/search?*"
         ],
     "ominbox": {
         "keyword": "hmbhs"

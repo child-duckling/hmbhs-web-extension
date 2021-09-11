@@ -1,5 +1,25 @@
 let color = '#FF7417'
 
+
+function get_browser_info(){
+    var ua=navigator.userAgent,tem,M=ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || []; 
+    if(/trident/i.test(M[1])){
+        tem=/\brv[ :]+(\d+)/g.exec(ua) || []; 
+        return {name:'IE ',version:(tem[1]||'')};
+        }   
+    if(M[1]==='Chrome'){
+        tem=ua.match(/\bOPR\/(\d+)/)
+        if(tem!=null)   {return {name:'Opera', version:tem[1]};}
+        }   
+    M=M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+    if((tem=ua.match(/version\/(\d+)/i))!=null) {M.splice(1,1,tem[1]);}
+    return {
+      name: M[0],
+      version: M[1]
+    };
+ }
+
+
 document.getElementById('container_header_links').style.background = color
 let buttonCorrection = document.getElementsByClassName('link_block_sm')
 buttonCorrection[0].style.borderRight = `1px ${color} solid`
@@ -61,7 +81,5 @@ document.querySelector('.module').prepend(appText)
 let credit = document.createElement('a')
 credit.href = 'https://hmbhs.cabrillo.k12.ca.us'
 credit.className = 'button_footer'
-credit.innerHTML = 'Modified by the HMBHS Web Extension'
+credit.innerHTML = `     Modified by the HMBHS ${get_browser_info().name} Extension`
 document.querySelector('.button_spacer').append(credit)
-
-
