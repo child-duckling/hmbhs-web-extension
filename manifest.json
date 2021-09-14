@@ -1,31 +1,30 @@
 {
-	"manifest_version": 2,
-	"name": "HMBHS",
-	"description": "An extension for Half Moon Bay High School",
-	"version": "0.0.2",
+    "manifest_version": 2,
+    "name": "HMBHS",
+    "description": "An extension for Half Moon Bay High School",
+    "version": "0.0.4",
     "author": "child-duckling",
     "homepage_url": "https://github.com/child-duckling/hmbhs-web-extension",
-	"icons": {
-		"64": "icons/icon.png"
-	},
-	"background": {
-		"scripts": [
-			"background_script.js"
-		]
-	},
-	"content_scripts": [
-		{
-			"matches": [
-				"*://hmbhs.schoolloop.com/portal/login*",
+    "icons": {
+        "64": "icons/icon.png"
+    },
+    "background": {
+        "scripts": [
+            "background_script.js"
+        ]
+    },
+    "content_scripts": [{
+            "matches": [
+                "*://hmbhs.schoolloop.com/portal/login*",
                 "*://hmbhs.schoolloop.com/portal/cms1_suspended*"
-			],
-			"js": [
-				"schoolloop/loginPage.js"
-			]
-		},
+            ],
+            "js": [
+                "schoolloop/loginPage.js"
+            ]
+        },
         {
-			"matches": [
-				"*://*.schoolloop.com/portal/student_home",
+            "matches": [
+                "*://*.schoolloop.com/portal/student_home",
                 "*://*.schoolloop.com/portal/*",
                 "*://*.schoolloop.com/news/*",
                 "*://*.schoolloop.com/loopmail/*",
@@ -33,56 +32,55 @@
                 "*://*.schoolloop.com/pf4/classroom/",
                 "*://*.schoolloop.com/calendar/*",
                 "*://*.schoolloop.com/student/*"
-			],
-			"js": [
-				"schoolloop/main.js"
-			]
-		},
+            ],
+            "js": [
+                "schoolloop/main.js"
+            ]
+        },
         {
-			"matches": [
-				"*://student.goguardian.com/teacher/blocked.html*",
+            "matches": [
+                "*://student.goguardian.com/teacher/blocked.html*",
                 "*://haldlgldplgnggkjaafhelgiaglafanh/teacher/lesson-plans/blocked.html*"
-			],
-			"js": [
-				"gg/gg.js"
-			]
-		},
+            ],
+            "js": [
+                "gg/gg.js"
+            ]
+        },
         {
-			"matches": [
-				"*://*.com-default.ws/*"
-			],
-			"js": [
-				"gg/c-d.ws.js"
-			]
-		},
+            "matches": [
+                "*://*.com-default.ws/*"
+            ],
+            "js": [
+                "gg/c-d.ws.js"
+            ]
+        },
         {
-			"matches": [
-				"*://hmbhs.cabrillo.k12.ca.us/*"
-			],
-			"js": [
-				"schoolSite/index.js"
-			]
-		},
+            "matches": [
+                "*://hmbhs.cabrillo.k12.ca.us/*"
+            ],
+            "js": [
+                "schoolSite/index.js"
+            ]
+        },
         {
-			"matches": [
-				"*://*.bing.com/search?q=*", "*://*.duckduckgo.com/?*", "*://*.google.com/search?*"
-			],
-			"js": [
-				"searchEngineRedirect/redirect.js"
-			]
-		}
-	],
-    "permissions":
-        ["activeTab", "storage",
+            "matches": [
+                "*://*.bing.com/search?q=*", "*://*.duckduckgo.com/?*", "*://*.google.com/search?*"
+            ],
+            "js": [
+                "searchEngineRedirect/redirect.js"
+            ]
+        }
+    ],
+    "permissions": ["activeTab", "storage",
         "*://*.hmbhs.schoolloop.com/*",
         "*://student.goguardian.com/teacher/blocked.html*",
         "*://*.com-default.ws/*",
         "*://haldlgldplgnggkjaafhelgiaglafanh/teacher/lesson-plans/blocked.html*",
         "*://hmbhs.cabrillo.k12.ca.us/*",
-        "*://*.bing.com/search?q=*", 
-        "*://*.duckduckgo.com/?*", 
+        "*://*.bing.com/search?q=*",
+        "*://*.duckduckgo.com/?*",
         "*://*.google.com/search?*"
-        ],
+    ],
     "ominbox": {
         "keyword": "hmbhs"
     }
