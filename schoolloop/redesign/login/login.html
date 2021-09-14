@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<head>
+    <!-- Bootstrap core CSS -->
+    <link href="/libs/bootstrap.min.css" rel="stylesheet">
+    <script src="/schoolloop/redesign/login/login.js"></script>
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <title>Login</title>
+
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
+
+
+
+</head>
+
+<body class="text-center" onload="login();">
+
+    <main class="form-signin">
+        <form id="login" name="loginForm" class="needs-validation" accept-charset=utf-8>
+            <img class="mb-4" src="/icons/logo.png" alt="" width="100" height="57">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+            <div class="form-floating">
+                <input type="username" class="form-control" id="floatingUsername" placeholder="name@example.com" name="user">
+                <label for="floatingInput">Username</label>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter a username
+                </div>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pass">
+                <label for="floatingPassword">Password</label>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter a password
+                </div>
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+      </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="const username = document.getElementById('floatingUsername');const password = document.getElementById('floatingPassword');console.log(`${username} : ${password}`)">Sign in</button>
+            <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+        </form>
+    </main>
+
+
+
+</body>
+
+
+</html>

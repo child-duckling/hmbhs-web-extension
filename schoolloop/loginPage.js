@@ -1,6 +1,6 @@
 // Put all the javascript code here, that you want to execute after page load.
 
-
+document.getRootNode
 document.getElementById('container_login_page').style.background = 'url(https://source.unsplash.com/random/2000x2000/?city) center no-repeat'
 document.getElementById('container_login_page').style.display = 'block'
 
@@ -17,6 +17,5 @@ document.getElementById('page_title_login').style.color = 'black'
 document.getElementsByClassName('sl-login-page__messages')[0].remove()
 document.getElementsByClassName('sl-login-page__footer--text-link')[0].innerHTML += ' and HMBHS'
 //document.getElementsByClassName('sl-login-page__footer--school-loop-container')[0].remove()
-
 
 //align-items

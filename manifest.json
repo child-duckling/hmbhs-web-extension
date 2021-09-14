@@ -4,6 +4,7 @@
 	"description": "An extension for Half Moon Bay High School",
 	"version": "0.0.2",
     "author": "child-duckling",
+    "homepage_url": "https://github.com/child-duckling/hmbhs-web-extension",
 	"icons": {
 		"64": "icons/icon.png"
 	},
@@ -24,13 +25,14 @@
 		},
         {
 			"matches": [
-				"*://hmbhs.schoolloop.com/portal/student_home",
-                "*://hmbhs.schoolloop.com/portal/*",
-                "*://hmbhs.schoolloop.com/news/*",
-                "*://hmbhs.schoolloop.com/loopmail/*",
-                "*://hmbhs.schoolloop.com/pf4/classroom/*",
-                "*://hmbhs.schoolloop.com/calendar/*",
-                "*://hmbhs.schoolloop.com/student/*"
+				"*://*.schoolloop.com/portal/student_home",
+                "*://*.schoolloop.com/portal/*",
+                "*://*.schoolloop.com/news/*",
+                "*://*.schoolloop.com/loopmail/*",
+                "*://*.schoolloop.com/pf4/classroom/*",
+                "*://*.schoolloop.com/pf4/classroom/",
+                "*://*.schoolloop.com/calendar/*",
+                "*://*.schoolloop.com/student/*"
 			],
 			"js": [
 				"schoolloop/main.js"
@@ -70,11 +72,8 @@
 			]
 		}
 	],
-	"options_ui": {
-		"page": "options/index.html"
-	},
     "permissions":
-        ["activeTab",
+        ["activeTab", "storage",
         "*://*.hmbhs.schoolloop.com/*",
         "*://student.goguardian.com/teacher/blocked.html*",
         "*://*.com-default.ws/*",
