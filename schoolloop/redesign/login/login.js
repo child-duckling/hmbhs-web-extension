@@ -1,8 +1,8 @@
 //document.getElementById("submit").addEventListener("click", validate);
 const QueryString = window.location.search;
 const urlParams = new URLSearchParams(QueryString);
-
-if (browser.storage.local.get("user") || browser.storage.local.get("user")) document.location.href = document.location.origin + "/schoolloop/redesign/dashboard/index.html"
+chrome.storage.local.clear()
+    //if (browser.storage.local.get("user") || browser.storage.local.get("user")) document.location.href = document.location.origin + "/schoolloop/redesign/dashboard/index.html"
 
 if (urlParams.get('user') && urlParams.get('pass')) {
     document.getElementsByClassName('form-signin').innerHTML = `<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>`
@@ -18,7 +18,7 @@ if (urlParams.get('user') && urlParams.get('pass')) {
                         
                         console.log(data)
                         var user = data
-                        chrome.storage.local.set({ user }).then(() => {
+                        browser.storage.local.set({ user }).then(() => {
                             console.log('saved')
                             
                         })
