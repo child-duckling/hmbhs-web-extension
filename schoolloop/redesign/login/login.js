@@ -8,27 +8,26 @@ if (urlParams.get('user') && urlParams.get('pass')) {
     document.getElementsByClassName('form-signin').innerHTML = `<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>`
     const user = urlParams.get('user')
     const pass = urlParams.get('pass')
-    console.log(`Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`)
+    console.log(`Trying to login with key: ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`)
                 fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI('tokenExtensionloltest')}&devOS=${encodeURI(navigator.appCodeName)}&year=${new Date().getFullYear()}`, {
                             headers: {
                                 authorization: `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`
             }
                 }).then(response => response.json())
                     .then((data) => {
-                        
+                        console.log('Login successful')
                         console.log(data)
                         var user = data
-                        browser.storage.local.set({ user }).then(() => {
+												user.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //SAve Auth header for future use
+                        browser.storage.local.set({ user }).then(() => { //Save it in extension storage since cokkies/window storage gets cleared every time the extension page is loaded
                             console.log('saved')
-                            
                         })
-                        document.location = document.location.origin + "/schoolloop/redesign/dashboard/index.html"
-
+                        document.location = document.location.origin + "/schoolloop/redesign/dashboard/dashboard.html"
                     })
-                    .catch(() => {
-                
-                    document.location = document.location.origin + document.location.pathname
-                
+                    .catch((err) => {
+										//Want to do some bootstrap magic here in the future
+										console.log('Login Failed')
+                    document.location = document.location.origin + document.location.pathname + `?failed=${err}`
                 })
 }
 
