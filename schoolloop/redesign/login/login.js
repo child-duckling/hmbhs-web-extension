@@ -9,7 +9,7 @@ if (urlParams.get('user') && urlParams.get('pass')) {
     const user = urlParams.get('user')
     const pass = urlParams.get('pass')
     console.log(`Trying to login with key: ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`)
-                fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI(chrome.management.getSelf())}&devOS=${encodeURI(navigator.appCodeName)}&year=${new Date().getFullYear()}`, {
+                fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI(chrome.runtime.id)}&devOS=${encodeURI(chrome.runtime.getManifest().version)}&year=${new Date().getFullYear()}`, {
                             headers: {
                                 authorization: `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`
             }
