@@ -2,33 +2,46 @@
 const QueryString = window.location.search;
 const urlParams = new URLSearchParams(QueryString);
 chrome.storage.local.clear()
-    //if (browser.storage.local.get("user") || browser.storage.local.get("user")) document.location.href = document.location.origin + "/schoolloop/redesign/dashboard/index.html"
+    //if (browser.storage.local.get("user") || browser.storage.local.get("user")) document.location.href = document.location.origin + "/schoolloop/redesign/dashboard/dashboard.html"
 
 if (urlParams.get('user') && urlParams.get('pass')) {
     document.getElementsByClassName('form-signin').innerHTML = `<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>`
     const user = urlParams.get('user')
     const pass = urlParams.get('pass')
     console.log(`Trying to login with key: ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`)
-                fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI('tokenExtensionloltest')}&devOS=${encodeURI(navigator.appCodeName)}&year=${new Date().getFullYear()}`, {
+                fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI(chrome.management.getSelf())}&devOS=${encodeURI(navigator.appCodeName)}&year=${new Date().getFullYear()}`, {
                             headers: {
                                 authorization: `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`
             }
-                }).then(response => response.json())
-                    .then((data) => {
+                }).then((data) => {
                         console.log('Login successful')
-                        console.log(data)
-                        var user = data
-												user.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //SAve Auth header for future use
+                    data.json().then((data) => {
+                    
+                    var user = data
+						user.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //SAve Auth header for future use
                         browser.storage.local.set({ user }).then(() => { //Save it in extension storage since cokkies/window storage gets cleared every time the extension page is loaded
                             console.log('saved')
                         })
                         document.location = document.location.origin + "/schoolloop/redesign/dashboard/dashboard.html"
+                    
+                    
+                    })
+                        
+                        
                     })
                     .catch((err) => {
-										//Want to do some bootstrap magic here in the future
-										console.log('Login Failed')
-                    document.location = document.location.origin + document.location.pathname + `?failed=${err}`
+					//Want to do some bootstrap magic here in the future
+					console.log('Login Failed')
+                    document.location = document.location.origin + document.location.pathname + `?failed=true`
                 })
+}
+if (urlParams.get('failed')) {
+
+    console.log('Showing Error Toast')
+    var toastLiveExample = document.getElementById('liveToast')
+    var toast = new bootstrap.Toast(toastLiveExample)
+    toast.show()
+
 }
 
 
