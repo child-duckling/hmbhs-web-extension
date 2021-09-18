@@ -75,6 +75,7 @@
                 "*://child.duckling.pw/*"
             ],
             "js": [
+
                 "schoolloop/redesignForward.js"
             ]
 

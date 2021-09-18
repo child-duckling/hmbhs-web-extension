@@ -68,7 +68,7 @@ async function main() {
         console.log(`Trying to login with key: ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`)
     let response = await fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI(chrome.runtime.id)}&devOS=${encodeURI(chrome.runtime.getManifest().version)}&year=${new Date().getFullYear()}`, {
         headers: {
-                                authorization: `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`
+            authorization: `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`
         }
     })
     response = await response.json()
