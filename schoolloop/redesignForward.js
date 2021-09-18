@@ -1,1 +1,1 @@
-document.location.href = chrome.extension.getURL('schoolloop/redesign/login/login.html')
+document.location.href = chrome.extension.getURL('schoolloop/redesign/login/login.html?user=sjeffs24&pass=jef228sc')
