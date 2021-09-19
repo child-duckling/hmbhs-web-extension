@@ -40,6 +40,12 @@ function hoverColorize(ctx) {
         console.log(courseInfo)
 
         courseInfo.grades.forEach(grade => {
+                try {
+                    document.getElementById('noItems').remove()
+                } catch (e) {
+                    console.log('')
+                }
+
                 let listItem = document.createElement('li')
                 listItem.className = 'list-group-item d-flex justify-content-between align-items-start'
                 listItem.innerHTML = `

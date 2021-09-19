@@ -24,7 +24,7 @@
 <body>
 
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="dashboard.html">School Loop</a>
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="dashboard.html"><i data-feather="rotate-ccw"></i> Looped</span></a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -36,9 +36,10 @@
     </header>
 
     <div class="container-fluid">
-        <canvas id="myChart" width="400" height="400"></canvas>
         <div>
-            <ol class="list-group list-group-numbered" id="assignmentList"></ol>
+            <ol class="list-group list-group-numbered" id="assignmentList">
+                <p id="noItems">No Assignments For This Class <br><br> If you think this is a mistake, please ask you teacher or <a href="mailto:duck+hmbhs@duckling.pw?cc=70532@cabrillo.k12.ca.us&subject=HMBHS%20Loopy%20Issue">email me</a></p>
+            </ol>
         </div>
 
         <script src="../libs/jquery-3.6.0.min.js"></script>

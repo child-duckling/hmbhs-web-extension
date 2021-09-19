@@ -39,6 +39,15 @@ function login(p = null) {
 
 
 }
+
+function error(p = null) {
+
+    if (p) document.location.href = document.location.origin + `/schoolloop/redesign/login/login.html?failed=${p}`
+    document.location.href = document.location.origin + "/schoolloop/redesign/login/login.html"
+
+
+}
+
 //document.getElementById("submit").addEventListener("click", validate);
 const QueryString = window.location.search;
 const urlParams = new URLSearchParams(QueryString);
@@ -74,6 +83,9 @@ async function main() {
     response = await response.json()
     response.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //SAve Auth header for future use
     console.log(response)
+
+    if (response.role != 'student') error(response.role)
+    
     await chrome.storage.local.set({ response }, function () {
         console.log("Data was saved.");
         login()

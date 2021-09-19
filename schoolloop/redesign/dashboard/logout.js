@@ -6,8 +6,10 @@ function logout() {
 }
 
 
-document.getElementById('user').addEventListener('click', () => {
+document.getElementById('logout').addEventListener('click', () => {
 
     logout()
 
 })
+
+feather.replace({ 'aria-hidden': 'true' })
