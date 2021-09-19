@@ -20,23 +20,30 @@ async function getEverything(user) {
     console.log(courseList)
     var count = 0
     courseList.forEach(course => {
-        let firstSpaceAmt = 20 - (String(course.courseName).length - 4)
-        let secondSpaceAmt = 20 - (String(`${course.grade} ${course.score}`).length)
-
-        var firstSpace = '&nbsp'.repeat(firstSpaceAmt)
-
-        var secondSpace = '&nbsp'.repeat(secondSpaceAmt)
-
-
-
-        let card = document.createElement('li')
-        card.className = 'list-group-item'
+        if (course.grade === 'null') course.grade = 'A'
+        if (course.lastUpdated === 'null') course.lastUpdate = 'Unkown'
+        let link = document.location.origin + `/schoolloop/redesign/dashboard/class.html?id=${course.periodID}`
+        let card = document.createElement('div')
+        card.className = 'col-sm-6'
         card.innerHTML = `
-  <small>${course.period}</small> &nbsp&nbsp ${course.courseName} ${firstSpace} ${course.grade} (${course.score}) ${secondSpace} ${course.teacherName}`
+        <div href="${link}" class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+            <div class="card-header">Period ${course.period}</div>
+            <div class="card-body">
+                <h5 class="card-title"> <a href="${link}" style="text-decoration:none;" class="text-white">${course.courseName}</a></h5>
+                <p class="card-text"><hr></p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-white bg-primary">Teacher: ${course.teacherName}</li>
+                    <li class="list-group-item text-white bg-primary">Grade: ${course.grade || 'A'}</li>
+                </ul>
+            </div>
+            <div class="card-footer text-white">
+                <small> Last Updated: ${course.lastUpdated || 'Unkown'} </small>
+            </div>
+        </div>`
 
         document.getElementById('class-table').appendChild(card)
     })
-
+    ` &nbsp&nbsp ${course.courseName} ${firstSpace} ${course.grade} (${course.score}) ${secondSpace} ${course.teacherName}`
 
 
 

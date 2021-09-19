@@ -24,29 +24,31 @@
 <body>
 
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">School Loop</a>
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="dashboard.html">School Loop</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" href="#" id="user">Sign out</a>
+                <a class="nav-link px-3" href="" id="user">Sign out</a>
             </div>
         </div>
     </header>
 
     <div class="container-fluid">
-        <div id="class-table" class="row row-cols-1 row-cols-md-3 g-4 h-100"></div>
-    </div>
+        <canvas id="myChart" width="400" height="400"></canvas>
+        <div>
+            <ol class="list-group list-group-numbered" id="assignmentList"></ol>
+        </div>
 
-    <script src="../libs/jquery-3.6.0.min.js"></script>
-    <script src="../libs/bootstrap.bundle.min.js"></script>
-    <script src="../libs/feather.min.js"></script>
-    <script src="../libs/Chart.min.js"></script>
-    <script src="logout.js"></script>
+        <script src="../libs/jquery-3.6.0.min.js"></script>
+        <script src="../libs/bootstrap.bundle.min.js"></script>
+        <script src="../libs/feather.min.js"></script>
+        <script src="../libs/Chart.min.js"></script>
+        <script src="logout.js"></script>
 
 
-    <script src="dashboard.js"></script>
+        <script src="class.js"></script>
 </body>
 
 </html>
