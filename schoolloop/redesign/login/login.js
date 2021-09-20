@@ -75,47 +75,85 @@ async function main() {
         const user = urlParams.get('user')
         const pass = urlParams.get('pass')
         console.log(`Trying to login with key: ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`)
-    let response = await fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI(chrome.runtime.id)}&devOS=${encodeURI(chrome.runtime.getManifest().version)}&year=${new Date().getFullYear()}`, {
-        headers: {
-            authorization: `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`
-        }
-    })
-    response = await response.json()
-    response.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //SAve Auth header for future use
-    console.log(response)
-
-    if (response.role != 'student') error(response.role)
+        let response = await fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI(chrome.runtime.id)}&devOS=${encodeURI(chrome.runtime.getManifest().version)}&year=${new Date().getFullYear()}`, {
+            headers: {
+                authorization: `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`
+            }
+        })
+        response = await response.json()
+        response.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //SAve Auth header for future use
+        console.log(response)
+        //response.role = 'admin'
+        //if (response.role != 'student') error(response.role)
     
-    await chrome.storage.local.set({ response }, function () {
-        console.log("Data was saved.");
-        login()
-    });
+        await chrome.storage.local.set({ response }, function () {
+            console.log("Data was saved.");
+            login()
+        });
+        try {
+            console.log('false')
+        } catch (e) {
+            try {
+                browser.storage.local.set({ response }).then(() => { //Save it in Web Extension extension storage since cookies/window storage gets cleared every time the extension page is loaded
+                    console.log('saved')
+                })
+            } catch (e) {
                 try {
-                    console.log('false')
+                    document.cookie = `user=${String(response)}`
                 } catch (e) {
-                            try {
-                                browser.storage.local.set({ response }).then(() => { //Save it in Web Extension extension storage since cookies/window storage gets cleared every time the extension page is loaded
-                                    console.log('saved')
-                                })
-                            } catch (e) {
-                                try {
-                                    document.cookie = `user=${String(response)}`
-                                } catch(e) {
-                                    console.warn('saving disabled, enabling crosspage url params mode')
-                                    login(String(response))
-                                }
-                            }
-                        }
+                    console.warn('saving disabled, enabling crosspage url params mode')
+                    login(String(response))
+                }
+            }
+        }
                         
-                //login()
-}
-if (urlParams.get('failed')) {
+        //login()
+    }
+    if (urlParams.get('r') != 'null') {
 
-    console.log('Showing Error Toast')
-    var toastLiveExample = document.getElementById('liveToast')
-    var toast = new bootstrap.Toast(toastLiveExample)
-    toast.show()
+    console.log('Wrong Role')
+    document.getElementById('error').innerHTML = `
+<div class="modal" id="roleError" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Error</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>This site <b>only</b> allows users with a <code> student </code> role at this time <br><br>Your role of <code>${JSON.parse(decodeURI(urlParams.get('r'))).role}</code> is not supported</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+`
+    var myModal = new bootstrap.Modal(document.getElementById('roleError'), {})
+    myModal.toggle()
+
+    }
+    if (urlParams.get('out') && urlParams.get('r') === 'null') {
+    console.log('Logged Out')
+        document.getElementById('error').outerHTML = `<div class="toast position-absoulute bottom-0 end-0 text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true" id='loggedOutToast'>
+  <div class="d-flex">
+    <div class="toast-body">
+      You have been logged out.
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+</div>`
+    //loggedOutToast
 
     }
 }
 main()
+
+$(document).ready(function(){
+    $('.toast').toast('show');
+    setTimeout(() => {
+        $('.toast').toast('hide');
+    }, 2500)
+});

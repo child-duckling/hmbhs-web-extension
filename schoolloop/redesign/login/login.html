@@ -3,8 +3,7 @@
 <head>
     <!-- Bootstrap core CSS -->
     <link href="../libs/bootstrap.min.css" rel="stylesheet">
-    <script type="module" src="/browser-polyfill.js"></script>
-    <script src="./login.js"></script>
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -29,7 +28,7 @@
 
 </head>
 
-<body class="text-center" onload="login();">
+<body class="text-center">
 
     <main class="form-signin">
         <form id="login" name="loginForm" class="needs-validation" accept-charset=utf-8>
@@ -61,22 +60,20 @@
                 <label>
       </label>
             </div>
-            <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="const username = document.getElementById('floatingUsername');const password = document.getElementById('floatingPassword');console.log(`${username} : ${password}`)">Sign in</button>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
             <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
         </form>
-        <div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                    Hello, world! This is a toast message.
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
+
     </main>
-
-
+    <div id="error"></div>
+    <script type="module" src="/browser-polyfill.js"></script>
+    <script src="../libs/bootstrap.bundle.min.js"></script>
+    <script src="../libs/jquery-3.6.0.min.js"></script>
+    <script src="login.js"></script>
 
 </body>
+
+
 
 
 </html>
