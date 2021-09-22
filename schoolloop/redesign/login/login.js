@@ -42,10 +42,17 @@ function login(p = null) {
 
 function error(p = null) {
 
-    if (p) document.location.href = document.location.origin + `/schoolloop/redesign/login/login.html?failed=${p}`
+    if (p) document.location.href = document.location.origin + `/schoolloop/redesign/login/login.html?failed=${encodeURI(p)}`
     document.location.href = document.location.origin + "/schoolloop/redesign/login/login.html"
 
 
+}
+
+function alert(message, type) {
+    var wrapper = document.createElement('div')
+    wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
+
+    loginAlert.append(wrapper)
 }
 
 //document.getElementById("submit").addEventListener("click", validate);
@@ -80,6 +87,8 @@ async function main() {
                 authorization: `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`
             }
         })
+        console.log(response)
+        if (response.statusText != 'OK') document.location.href = document.location.origin + `/schoolloop/redesign/login/login.html?failed=true`
         response = await response.json()
         response.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //SAve Auth header for future use
         console.log(response)
@@ -109,6 +118,14 @@ async function main() {
                         
         //login()
     }
+    
+    if (urlParams.get('failed')) {
+        var loginAlert = document.getElementById('loginAlert')
+        alert('Please check your username and password', 'danger')
+    }
+    
+    
+    
     if (urlParams.get('r') != 'null') {
 
     console.log('Wrong Role')
