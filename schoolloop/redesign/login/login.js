@@ -40,10 +40,10 @@ function login(p = null) {
 
 }
 
-function error(p = null) {
+function error() {
 
-    if (p) document.location.href = document.location.origin + `/schoolloop/redesign/login/login.html?failed=${encodeURI(p)}`
-    document.location.href = document.location.origin + "/schoolloop/redesign/login/login.html"
+    document.location.href = document.location.origin + `/schoolloop/redesign/login/login.html?failed=true`
+
 
 
 }
@@ -88,85 +88,83 @@ async function main() {
             }
         })
         console.log(response)
-        if (response.statusText != 'OK') document.location.href = document.location.origin + `/schoolloop/redesign/login/login.html?failed=true`
-        response = await response.json()
-        response.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //SAve Auth header for future use
-        console.log(response)
-        //response.role = 'admin'
+        if (response.statusText != 'OK') error()
+        try {
+            
+            response = await response.json()
+            response.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //SAve Auth header for future use
+            console.log(response)
+        } catch {
+            error()
+        }
+        
+        response.role = 'admin'
         //if (response.role != 'student') error(response.role)
     
         await chrome.storage.local.set({ response }, function () {
             console.log("Data was saved.");
             login()
         });
-        try {
-            console.log('false')
-        } catch (e) {
-            try {
-                browser.storage.local.set({ response }).then(() => { //Save it in Web Extension extension storage since cookies/window storage gets cleared every time the extension page is loaded
-                    console.log('saved')
-                })
-            } catch (e) {
-                try {
-                    document.cookie = `user=${String(response)}`
-                } catch (e) {
-                    console.warn('saving disabled, enabling crosspage url params mode')
-                    login(String(response))
-                }
-            }
-        }
                         
         //login()
-    }
-    
-    if (urlParams.get('failed')) {
+    } else if (urlParams.get('failed')) {
         var loginAlert = document.getElementById('loginAlert')
         alert('Please check your username and password', 'danger')
-    }
-    
-    
-    
-    if (urlParams.get('r') != 'null') {
-
-    console.log('Wrong Role')
-    document.getElementById('error').innerHTML = `
-<div class="modal" id="roleError" aria-hidden="false">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Error</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>This site <b>only</b> allows users with a <code> student </code> role at this time <br><br>Your role of <code>${JSON.parse(decodeURI(urlParams.get('r'))).role}</code> is not supported</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-`
-    var myModal = new bootstrap.Modal(document.getElementById('roleError'), {})
-    myModal.toggle()
-
-    }
-    if (urlParams.get('out') && urlParams.get('r') === 'null') {
-    console.log('Logged Out')
+    } else if (urlParams.get('user') === '' && urlParams.get('pass') != '' || urlParams.get('pass') === '' && urlParams.get('user') != '') {
+        error()
+    } else if (urlParams.get('r') != "null") {
+        try {
+            JSON.parse(decodeURI(urlParams.get('r'))).role
+            console.log('Wrong Role')
+            document.getElementById('error').innerHTML = `
+            <div class="modal" id="roleError" aria-hidden="false">
+             <div class="modal-dialog">
+             <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                  <div class="modal-body">
+                <p>This site <b>only</b> allows users with a <code> student </code> role at this time <br><br>Your role of <code>${JSON.parse(decodeURI(urlParams.get('r'))).role}</code> is not supported</p>
+                 </div>
+              <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+             </div>
+           </div>
+          </div>
+        </div>
+        `
+        var myModal = new bootstrap.Modal(document.getElementById('roleError'), {})
+        myModal.toggle()
+        } catch {
+            
+            console.log('No URI Params')
+            
+        }
+        
+        
+        
+    } else if (urlParams.get('r') === 'null' && String(window.location.href).includes('?')) {
+        console.log('Logged Out')
         document.getElementById('error').outerHTML = `<div class="toast position-absoulute bottom-0 end-0 text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true" id='loggedOutToast'>
-  <div class="d-flex">
-    <div class="toast-body">
-      You have been logged out.
-    </div>
-    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-  </div>
-</div>`
+            <div class="d-flex">
+                <div class="toast-body">
+                    You have been logged out.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>`
     //loggedOutToast
-
+    } else {
+    
+        console.log('No URI Params')
+    
     }
 }
 main()
+
+
+
 
 $(document).ready(function(){
     $('.toast').toast('show');
