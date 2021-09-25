@@ -100,7 +100,7 @@ async function checkUser(user, pass) {
     
         try {
             console.log(response)
-            if (response.statusText == 'OK') {
+            if (response.statusText == 'OK' || response.statusText == '') {
                 response = await response.json()
                 //response.role = 'admin'
                 if (response.role == 'student') {
@@ -137,6 +137,28 @@ async function checkUser(user, pass) {
 
 
 async function main() {
+    try {
+        await chrome.storage.local.get((user) => {
+            try {
+                user = user.user || user.response
+                if (Object.entries(user).length != 0) {
+                
+                    alert(`<div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Please Wait, Signing you in</span></div> Signing you in...`, 'success')
+                    setTimeout(() => {
+                    
+                        login()
+                    
+                    }, 50)//2500
+                }
+            } catch (error) {
+                return
+            }
+            console.log(user)
+        })
+    } catch (error) {
+        console.log('No User Found!')
+    }
+    
     if (urlParams.get('failed')) {
         var loginAlert = document.getElementById('loginAlert')
         
@@ -175,6 +197,8 @@ async function main() {
 
     }
 }
+
+document.getElementById('runas').innerHTML = `${chrome.runtime.id}`
 main()
 
 
