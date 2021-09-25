@@ -51,9 +51,19 @@ function error() {
 function alert(message, type) {
     var wrapper = document.createElement('div')
     wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
-
+    var loginAlert = document.getElementById('loginAlert')
     loginAlert.append(wrapper)
 }
+
+function incorrectRole(role) {
+
+    document.getElementById('badRole').innerHTML = String(role)
+
+    var myModal = new bootstrap.Modal(document.getElementById('roleError'), {})
+    myModal.toggle()
+
+}
+
 
 //document.getElementById("submit").addEventListener("click", validate);
 const QueryString = window.location.search;
@@ -76,74 +86,78 @@ try {
     }
 }
 */
-async function main() {
-    if (urlParams.get('user') && urlParams.get('pass')) {
-        document.getElementsByClassName('form-signin').innerHTML = `<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>`
-        const user = urlParams.get('user')
-        const pass = urlParams.get('pass')
-        console.log(`Trying to login with key: ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`)
-        let response = await fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI(chrome.runtime.id)}&devOS=${encodeURI(chrome.runtime.getManifest().version)}&year=${new Date().getFullYear()}`, {
-            headers: {
-                authorization: `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`
-            }
-        })
-        console.log(response)
-        if (response.statusText != 'OK') error()
-        try {
-            
-            response = await response.json()
-            response.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //SAve Auth header for future use
+async function checkUser(user, pass) {
+    console.log(`Trying to login with key: ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`)
+            let response = await fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI(chrome.runtime.id)}&devOS=${encodeURI(chrome.runtime.getManifest().version)}&year=${new Date().getFullYear()}`, {
+                headers: {
+                    authorization: `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`
+                }
+            })
             console.log(response)
-        } catch {
-            error()
+
+    
+    
+    
+        try {
+            console.log(response)
+            if (response.statusText == 'OK') {
+                response = await response.json()
+                //response.role = 'admin'
+                if (response.role == 'student') {
+                    response.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //SAve Auth header for future use
+                    await chrome.storage.local.set({ response }, function () {
+                        console.log("Data was saved.");
+                        login()
+                    });
+                    
+                    
+                    
+                    
+                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                } else {
+                    incorrectRole(response.role)
+                    return
+                }
+            } else {
+                alert('Something Went Wrong! Check Username and Password', 'danger')
+                return
+            }
+        } catch(e) {
+            alert(`Error ${e}`, 'danger')
+            return
         }
         
-        response.role = 'admin'
-        //if (response.role != 'student') error(response.role)
+        
     
-        await chrome.storage.local.set({ response }, function () {
-            console.log("Data was saved.");
-            login()
-        });
-                        
+             
         //login()
-    } else if (urlParams.get('failed')) {
+
+
+}
+
+
+async function main() {
+    if (urlParams.get('failed')) {
         var loginAlert = document.getElementById('loginAlert')
-        alert('Please check your username and password', 'danger')
+        
     } else if (urlParams.get('user') === '' && urlParams.get('pass') != '' || urlParams.get('pass') === '' && urlParams.get('user') != '') {
-        error()
+        //error()
     } else if (urlParams.get('r') != "null") {
         try {
             JSON.parse(decodeURI(urlParams.get('r'))).role
             console.log('Wrong Role')
             document.getElementById('error').innerHTML = `
-            <div class="modal" id="roleError" aria-hidden="false">
-             <div class="modal-dialog">
-             <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Error</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                 </div>
-                  <div class="modal-body">
-                <p>This site <b>only</b> allows users with a <code> student </code> role at this time <br><br>Your role of <code>${JSON.parse(decodeURI(urlParams.get('r'))).role}</code> is not supported</p>
-                 </div>
-              <div class="modal-footer">
-               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-             </div>
-           </div>
-          </div>
-        </div>
+            
         `
-        var myModal = new bootstrap.Modal(document.getElementById('roleError'), {})
-        myModal.toggle()
+            
         } catch {
-            
+
             console.log('No URI Params')
-            
+
         }
-        
-        
-        
+
+
+
     } else if (urlParams.get('r') === 'null' && String(window.location.href).includes('?')) {
         console.log('Logged Out')
         document.getElementById('error').outerHTML = `<div class="toast position-absoulute bottom-0 end-0 text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true" id='loggedOutToast'>
@@ -154,11 +168,11 @@ async function main() {
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
             </div>`
-    //loggedOutToast
+            //loggedOutToast
     } else {
-    
+
         console.log('No URI Params')
-    
+
     }
 }
 main()
@@ -166,9 +180,15 @@ main()
 
 
 
-$(document).ready(function(){
+$(document).ready(function() {
     $('.toast').toast('show');
     setTimeout(() => {
         $('.toast').toast('hide');
     }, 2500)
+});
+
+$('#login').bind('submit', function(e) {
+            e.preventDefault();
+            console.log('jquery booom!');
+            checkUser($('#floatingUsername').val(), $('#floatingPassword').val());
 });

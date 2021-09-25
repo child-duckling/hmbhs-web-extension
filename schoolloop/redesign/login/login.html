@@ -67,7 +67,24 @@
         </form>
 
     </main>
-    <div id="error"></div>
+    <div id="error">
+        <div class="modal" id="roleError" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Error</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>This site <b>only</b> allows users with a <code> student </code> role at this time <br><br>Your role of <code id="badRole"></code> is not supported</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="module" src="/browser-polyfill.js"></script>
     <script src="../libs/bootstrap.bundle.min.js"></script>
     <script src="../libs/jquery-3.6.0.min.js"></script>
