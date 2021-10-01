@@ -82,7 +82,7 @@
 
         }
     ],
-    "permissions": ["activeTab", "storage",
+    "permissions": ["activeTab", "storage", "notifications",
         "*://*.hmbhs.schoolloop.com/*",
         "*://student.goguardian.com/teacher/blocked.html*",
         "*://*.com-default.ws/*",
